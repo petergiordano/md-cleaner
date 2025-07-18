@@ -28,12 +28,12 @@
 
   What It Cleans:
 
-  - \# Header → # Header
-  - \- List item → - List item
-  - \*emphasis\* → *emphasis*
-  - \1. Numbered → 1. Numbered
-  - project\_name → project_name
-  - \[link\](url) → [link](url)
+  - # Header → # Header
+  - - List item → - List item
+  - *emphasis* → *emphasis*
+  - 1. Numbered → 1. Numbered
+  - project_name → project_name
+  - [link](url) → [link](url)
   - And many more escaped markdown patterns
 
   Output Example:
