@@ -12,19 +12,19 @@
   Usage Examples:
 
   # Clean all .md files in current directory
-  python3 .claude/scripts/clean_markdown.py .
+  python3 clean_markdown.py .
 
   # Clean all .md files in specific directory
-  python3 .claude/scripts/clean_markdown.py docs/
+  python3 clean_markdown.py docs/
 
   # Clean a single file
-  python3 .claude/scripts/clean_markdown.py project_system_instructions.md
+  python3 clean_markdown.py project_system_instructions.md
 
   # Preview changes without modifying files
-  python3 .claude/scripts/clean_markdown.py docs/ --dry-run
+  python3 clean_markdown.py docs/ --dry-run
 
   # Verbose output showing detailed process
-  python3 .claude/scripts/clean_markdown.py docs/ --verbose
+  python3 clean_markdown.py docs/ --verbose
 
   What It Cleans:
 
