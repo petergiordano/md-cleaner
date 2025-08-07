@@ -8,12 +8,13 @@ This is a markdown cleaning utility repository that provides tools to clean esca
 
 ## Core Architecture
 
-### Two Implementation Approaches
+### Three Implementation Approaches
 
-The repository contains two different implementations of markdown cleaning functionality:
+The repository contains three different implementations of markdown cleaning functionality:
 
 1. **`clean_markdown.py`** - Complete standalone script with CLI interface, file discovery, and processing pipeline
 2. **`markdown_cleaner.py`** - Core cleaning function library for integration into other projects
+3. **`markdown_cleaner_app.py`** - Graphical user interface (GUI) application using Tkinter for desktop use
 
 ### Key Components
 
@@ -61,11 +62,40 @@ git commit -m "Description of changes"
 git push
 ```
 
+## GUI Application and Build Process
+
+In addition to the command-line tool, this repository contains a graphical user interface (GUI) application for macOS, built using Python's Tkinter library.
+
+### Key Files for the GUI App
+
+- **`markdown_cleaner.py`**: This is the **core logic library**. It contains the `clean_escaped_markdown` function and is imported by both the CLI and the GUI app. Any changes to the cleaning logic should be made in this file.
+- **`markdown_cleaner_app.py`**: This is the main script for the GUI application. It handles creating the windows, buttons, and text areas, and it imports its logic from `markdown_cleaner.py`.
+- **`setup.py`**: This is the configuration file for the `py2app` utility. It defines how to bundle the `markdown_cleaner_app.py` script and its dependencies into a standalone macOS application (`.app`).
+- **`app_icon.icns`**: This is the icon file used for the macOS application bundle.
+
+### Building the Application
+
+The macOS application is built using the `py2app` library. To build or rebuild the app after making changes, run the following command in the terminal from the project's root directory:
+
+```bash
+python3 setup.py py2app
+```
+
+This command will generate two directories:
+- **`build/`**: Contains intermediate files used during the build process.
+- **`dist/`**: Contains the final, distributable `Markdown Cleaner.app` file.
+
+These generated directories should not be committed to the Git repository.
+
 ## File Structure
 
 - `clean_markdown.py` - Main executable script with CLI interface
 - `markdown_cleaner.py` - Core cleaning function for library use
-- `README-clean_markdown.md` - Usage documentation and examples
+- `markdown_cleaner_app.py` - GUI application using Tkinter
+- `setup.py` - py2app configuration for building macOS application
+- `app_icon.icns` - Icon file for macOS application bundle
+- `index.html` - Web-based frontend interface with Overdrive GTM branding
+- `README.md` - Usage documentation and examples
 - `md-cleaner.code-workspace` - VS Code workspace configuration
 
 ## Development Notes

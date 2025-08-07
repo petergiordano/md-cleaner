@@ -1,0 +1,19 @@
+# Build artifacts
+build/
+dist/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# macOS specific
+.DS_Store
+
+# IDE and editor files
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp

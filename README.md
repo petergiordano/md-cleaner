@@ -10,7 +10,8 @@ This repository provides **three different implementations** of markdown cleanin
 
 ### 2. `markdown_cleaner_app.py` - Graphical User Interface (GUI) 
 **Environment:** Desktop application with visual interface  
-**Purpose:** User-friendly desktop app for individual file processing
+**Purpose:** User-friendly desktop app for individual file processing  
+**Build:** Uses py2app to create standalone macOS application
 
 ### 3. `markdown_cleaner.py` - Library Function
 **Environment:** Python import for integration  
@@ -114,6 +115,30 @@ If you tried to use py2app on the original `clean_markdown.py` script, you would
 - ✅ Takes the core cleaning logic and wraps it in the necessary interface elements
 - ✅ Creates a proper desktop application that users can interact with
 
+### Building the macOS Application
+
+The GUI application can be packaged into a standalone macOS `.app` file using py2app:
+
+#### Prerequisites:
+```bash
+pip3 install py2app
+```
+
+#### Build Process:
+```bash
+# From the project root directory
+python3 setup.py py2app
+```
+
+This creates:
+- **`build/`** - Intermediate build files (ignored by Git)
+- **`dist/Markdown Cleaner.app`** - Final distributable application
+
+#### Key Build Files:
+- **`setup.py`** - py2app configuration file
+- **`app_icon.icns`** - Application icon for macOS
+- **`.gitignore`** - Excludes build artifacts from version control
+
 ---
 
 ## 📚 Library Function: `markdown_cleaner.py`
@@ -160,6 +185,7 @@ All implementations use the same core cleaning logic to transform:
 | **Server environments** | `clean_markdown.py` (CLI) |
 | **Individual file processing with visual interface** | `markdown_cleaner_app.py` (GUI) |
 | **Desktop app for non-technical users** | `markdown_cleaner_app.py` (GUI) |
+| **Standalone macOS application** | `markdown_cleaner_app.py` (GUI) + py2app |
 | **Integration into other Python projects** | `markdown_cleaner.py` (Library) |
 | **Building custom applications** | `markdown_cleaner.py` (Library) |
 
