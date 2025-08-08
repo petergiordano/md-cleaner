@@ -1,256 +1,192 @@
-# 🧹 Markdown Cleaner - Multiple Implementations
+# 🧹 Markdown Cleaner
 
-This repository provides **three different implementations** of markdown cleaning functionality, each designed for different environments and use cases:
+This repository provides a powerful and flexible utility for cleaning escaped markdown characters from text, with multiple interfaces for different use cases. The core logic is centralized, ensuring consistent results whether you use the command-line tool, the desktop app, or the Python library.
 
-## 📋 Available Scripts
+## ✨ Key Features
 
-### 1. `clean_markdown.py` - Command-Line Interface (CLI)
-**Environment:** Terminal/Command Line  
-**Purpose:** Batch processing, automation, server environments
+- **Centralized Logic**: The cleaning engine is built into a core library, ensuring identical, reliable results across all tools
+- **Command-Line Interface**: A powerful CLI for batch processing, automation, and server-side tasks  
+- **Graphical User Interface**: An intuitive desktop app for macOS for easy, interactive cleaning
+- **Web Interface**: A professional web-based frontend with modern design
+- **Importable Library**: A simple Python library to integrate the cleaning functionality into your own projects
 
-### 2. `markdown_cleaner_app.py` - Graphical User Interface (GUI) 
-**Environment:** Desktop application with visual interface  
-**Purpose:** User-friendly desktop app for individual file processing  
-**Build:** Uses py2app to create standalone macOS application
+## 🚀 Quick Start
 
-### 3. `markdown_cleaner.py` - Library Function
-**Environment:** Python import for integration  
-**Purpose:** Embedding cleaning functionality into other Python projects
+### Prerequisites
+- Python 3.7 or higher
+- For macOS app building: `pip3 install py2app`
 
----
-
-## 🖥️ CLI Script: `clean_markdown.py`
-
-### Features:
-- Recursive directory scanning - finds all .md files in subdirectories
-- Single file processing - can clean individual files  
-- Dry run mode - preview changes without modifying files
-- Verbose output - detailed cleaning process information
-- Statistics - summary of files processed and cleaned
-- Same cleaning logic - uses identical patterns from the library
-
-### Usage Examples:
-
+### Installation
 ```bash
-# Clean all .md files in current directory
+git clone https://github.com/petergiordano/md-cleaner.git
+cd md-cleaner
+```
+
+## 🛠️ The Tools
+
+### 1. `clean_markdown.py` (Command-Line Tool)
+
+A robust CLI for developers and power users.
+
+**Features:**
+- Recursively scan and clean all .md files in a directory
+- Process a single file
+- Perform a "dry run" to preview changes without modifying files
+- Get verbose output and statistics on the cleaning process
+
+**Usage:**
+```bash
+# Clean all markdown files in the current directory
 python3 clean_markdown.py .
 
-# Clean all .md files in specific directory  
-python3 clean_markdown.py docs/
-
 # Clean a single file
-python3 clean_markdown.py project_system_instructions.md
+python3 clean_markdown.py /path/to/your/file.md
 
-# Preview changes without modifying files
-python3 clean_markdown.py docs/ --dry-run
+# Preview changes in a directory
+python3 clean_markdown.py /path/to/docs --dry-run
 
-# Verbose output showing detailed process
-python3 clean_markdown.py docs/ --verbose
+# Verbose output with detailed statistics
+python3 clean_markdown.py /path/to/docs --verbose
 ```
 
-### Output Example:
+### 2. `markdown_cleaner_app.py` (Desktop App)
 
-```
-🧹 Markdown Escape Character Cleaner
-==================================================
-📁 Target: docs/
-🔍 Found 5 markdown file(s)
+A user-friendly desktop application for macOS.
 
-📄 Processing: docs/file1.md
-   🔍 Detected 3 types of escaped markdown patterns
-   ✅ Cleaned 3 pattern types
+**Features:**
+- Simple, modern interface with side-by-side input and output panels
+- Open .md or .txt files directly from Finder
+- Paste text for quick cleaning
+- Copy the cleaned text to your clipboard or save it to a new file
 
-📄 Processing: docs/file2.md  
-   ✨ File already clean
-
-📊 SUMMARY
-==================================================
-Files processed: 5
-Files cleaned: 3
-Total pattern types cleaned: 12
-Success rate: 5/5 files
-```
-
----
-
-## 🖼️ GUI Application: `markdown_cleaner_app.py`
-
-### Why Two Different Python Scripts?
-
-The **CLI** and **GUI** scripts are built for **completely different environments**:
-
-#### `clean_markdown.py` is a Command-Line Interface (CLI) script:
-- Designed to be run in a **terminal**
-- Reads arguments from the command line (like file paths)
-- Prints its output directly to the terminal
-- Exits when processing is complete
-- Has **no concept** of windows, buttons, or text boxes
-- Perfect for automation, batch processing, and server environments
-
-#### `markdown_cleaner_app.py` is a Graphical User Interface (GUI) script:
-- Built using **Tkinter** library for visual elements
-- Creates the visual components you interact with on screen
-- Includes the main window, text areas for input/output, and buttons
-- Designed for **interactive user experience**
-- Stays open and waits for user interaction
-- Perfect for individual users who prefer visual interfaces
-
-### Why py2app Needs the GUI Script:
-
-**The purpose of py2app is to bundle a GUI application.** When you double-click a `.app` file on your Mac, macOS expects to launch a program that:
-- Opens a window 
-- Waits for you to interact with it
-- Provides a visual interface
-
-**What would happen with the CLI script?**
-If you tried to use py2app on the original `clean_markdown.py` script, you would create an "app" that, when double-clicked, would:
-- ❌ Instantly run in the background with no input
-- ❌ Close itself immediately  
-- ❌ Show no windows or interface
-- ❌ Give you no way to provide files or see output
-
-**Therefore, you need `markdown_cleaner_app.py` because:**
-- ✅ Contains the essential code that creates and manages the entire **visual experience**
-- ✅ Provides the GUI framework that py2app is designed to package
-- ✅ Takes the core cleaning logic and wraps it in the necessary interface elements
-- ✅ Creates a proper desktop application that users can interact with
-
-### Building the macOS Application
-
-The GUI application can be packaged into a standalone macOS `.app` file using py2app:
-
-#### Prerequisites:
+**Building the App:**
 ```bash
+# Install py2app
 pip3 install py2app
-```
 
-#### Build Process:
-```bash
-# From the project root directory
+# Build the application
 python3 setup.py py2app
 ```
+The final application will be in the `dist/` folder.
 
-This creates:
-- **`build/`** - Intermediate build files (ignored by Git)
-- **`dist/Markdown Cleaner.app`** - Final distributable application
+### 3. `markdown_cleaner.py` (Core Library)
 
-#### Key Build Files:
-- **`setup.py`** - py2app configuration file
-- **`app_icon.icns`** - Application icon for macOS
-- **`.gitignore`** - Excludes build artifacts from version control
+The heart of the project. This is a simple, importable library containing the MarkdownCleaner class.
 
----
-
-## 📚 Library Function: `markdown_cleaner.py`
-
-### Purpose:
-Core cleaning function for integration into other Python projects.
-
-### Usage:
+**Basic Usage:**
 ```python
-from markdown_cleaner import clean_escaped_markdown
+from markdown_cleaner import MarkdownCleaner
 
-# In your code
-with open('file.md', 'r') as f:
-    content = f.read()
+# Create an instance of the cleaner
+cleaner = MarkdownCleaner()
 
-cleaned_content = clean_escaped_markdown(content)
+# Get your raw markdown content
+raw_content = "\\# This is an \\*escaped\\* header."
 
-with open('file.md', 'w') as f:
-    f.write(cleaned_content)
+# Clean the content
+cleaned_content, changes_made = cleaner.clean_escaped_markdown(raw_content)
+
+print(cleaned_content)
+# Output: # This is an *escaped* header.
 ```
 
----
-
-## 🔧 What All Scripts Clean:
-
-All implementations use the same core cleaning logic to transform:
-
-- `\# Header` → `# Header`
-- `\- List item` → `- List item`  
-- `\*emphasis\*` → `*emphasis*`
-- `\1. Numbered` → `1. Numbered`
-- `project\_name` → `project_name`
-- `\[link\]\(url\)` → `[link](url)`
-- And many more escaped markdown patterns
-
----
-
-## 🚀 Which Script Should You Use?
-
-| Use Case | Recommended Script |
-|----------|-------------------|
-| **Batch processing multiple files** | `clean_markdown.py` (CLI) |
-| **Automation/scripting** | `clean_markdown.py` (CLI) |
-| **Server environments** | `clean_markdown.py` (CLI) |
-| **Individual file processing with visual interface** | `markdown_cleaner_app.py` (GUI) |
-| **Desktop app for non-technical users** | `markdown_cleaner_app.py` (GUI) |
-| **Standalone macOS application** | `markdown_cleaner_app.py` (GUI) + py2app |
-| **Integration into other Python projects** | `markdown_cleaner.py` (Library) |
-| **Building custom applications** | `markdown_cleaner.py` (Library) |
-
----
-
-## ⚠️ Development & Maintenance
-
-### Important: Synchronizing Changes Across All Scripts
-
-**Critical Note for Developers:** When you modify the core cleaning logic or add new pattern recognition, you **must propagate changes across all three Python files**:
-
-1. **`markdown_cleaner.py`** - Core library function
-2. **`clean_markdown.py`** - CLI implementation  
-3. **`markdown_cleaner_app.py`** - GUI implementation
-
-### Why This Matters:
-
-Each script contains its own copy of the cleaning logic to maintain independence:
-- **Library version** (`markdown_cleaner.py`): Pure function for imports
-- **CLI version** (`clean_markdown.py`): Embedded in the MarkdownCleaner class
-- **GUI version** (`markdown_cleaner_app.py`): Embedded in the Tkinter application
-
-### What Changes Need Propagation:
-
-✅ **Always propagate these changes:**
-- New regex patterns for cleaning escaped characters
-- Modified pattern matching logic
-- Bug fixes in cleaning algorithms
-- Performance improvements to core processing
-- Changes to character escape handling
-
-✅ **Consider propagating these changes:**
-- Input validation improvements
-- Error handling enhancements
-- Edge case handling
-
-❌ **Don't propagate these changes:**
-- CLI-specific arguments and options
-- GUI-specific interface elements
-- Output formatting (each has its own style)
-- File handling methods (each handles files differently)
-
-### Development Workflow:
-
-1. **Make changes** to the core cleaning logic in `markdown_cleaner.py` first
-2. **Test the library function** to ensure it works correctly
-3. **Copy the changes** to the same function in `clean_markdown.py` 
-4. **Copy the changes** to the same function in `markdown_cleaner_app.py`
-5. **Test all three implementations** to ensure consistency
-6. **Run validation tests** with the same input across all versions
-
-### Example Change Propagation:
-
-If you add a new pattern to clean escaped underscores:
-
+**Advanced Usage:**
 ```python
-# Add this line to ALL THREE files:
-content = re.sub(r'\\(_)(?=[a-zA-Z0-9])', r'\1', content)
+# With verbose output and dry-run mode
+cleaner = MarkdownCleaner(dry_run=True, verbose=True)
+
+# Process entire files
+content = cleaner.read_file("document.md")
+cleaned_content, changes = cleaner.clean_escaped_markdown(content)
+cleaner.write_file("cleaned_document.md", cleaned_content)
+
+# Process directories
+success = cleaner.clean_directory("/path/to/markdown/files")
 ```
 
-**Files to update:**
-- `markdown_cleaner.py` line ~68
-- `clean_markdown.py` line ~68 (in clean_escaped_markdown method)
-- `markdown_cleaner_app.py` line ~XX (in the GUI's cleaning function)
+### 4. Web Interface (`index.html`)
 
----
+A professional web-based interface with modern design and drag-and-drop functionality.
 
-The scripts are now ready to use and will help clean any markdown files that have been exported from Google Docs or otherwise have escaped markdown characters!
+**Features:**
+- Drag-and-drop file upload
+- Real-time cleaning preview
+- Download cleaned files
+- Professional Overdrive GTM branding
+- Responsive design for desktop and mobile
+
+Simply open `index.html` in your web browser to use the interface.
+
+## 📝 What Gets Cleaned
+
+The cleaner handles these escaped markdown patterns:
+
+| Before | After |
+|--------|-------|
+| `\# Header` | `# Header` |
+| `\- List item` | `- List item` |
+| `\*emphasis\*` | `*emphasis*` |
+| `\1. Numbered` | `1. Numbered` |
+| `project\_name` | `project_name` |
+| `\[link\]\(url\)` | `[link](url)` |
+
+## 🔧 Development & Maintenance
+
+This project follows the **"Don't Repeat Yourself" (DRY)** principle. The core cleaning logic, including all regular expression patterns, resides exclusively in the `MarkdownCleaner` class within the `markdown_cleaner.py` file.
+
+### Making Changes
+- **To update cleaning logic**: Edit only `markdown_cleaner.py`
+- **Both CLI and GUI tools** automatically inherit changes
+- **All three interfaces** (Library/CLI/GUI) use identical logic
+
+### Architecture
+```
+markdown_cleaner.py (Core Library)
+├── clean_markdown.py (CLI imports from core)
+├── markdown_cleaner_app.py (GUI imports from core)  
+└── index.html (Web interface with JS implementation)
+```
+
+## 🧪 Testing
+
+```bash
+# Test the CLI tool
+python3 clean_markdown.py . --dry-run --verbose
+
+# Test the library
+python3 -c "from markdown_cleaner import MarkdownCleaner; print('✅ Import successful')"
+```
+
+## 📁 Repository Structure
+
+```
+md-cleaner/
+├── clean_markdown.py          # CLI tool
+├── markdown_cleaner.py        # Core library  
+├── markdown_cleaner_app.py    # GUI application
+├── setup.py                   # py2app build configuration
+├── index.html                 # Web interface
+├── app_icon.icns             # macOS app icon
+├── README.md                 # This file
+├── CLAUDE.md                 # AI development guidance
+└── .gitignore                # Git ignore rules
+```
+
+## 🐛 Troubleshooting
+
+**CLI Issues:**
+- Ensure Python 3.7+ is installed
+- Check file permissions for target directories
+- Use `--verbose` flag for detailed error information
+
+**GUI App Issues:**  
+- Install `py2app`: `pip3 install py2app`
+- Build issues: Clean with `rm -rf build dist` before rebuilding
+
+**Import Issues:**
+- Ensure `markdown_cleaner.py` is in your Python path
+- Check for conflicting module names
+
+## 📄 License
+
+[Add your license information here]
